@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Blog Platform additions ---
+.env.*
+!.env.example
+*.pyc
+.venv/
+node_modules/
+coverage/
+.DS_Store
+.idea/
+.vscode/
