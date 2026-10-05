@@ -23,7 +23,7 @@ Day plan: D1 T-021–T-024 · D2 T-025–T-027 · D3 T-028–T-031 · D4 T-032�
 Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Numbers without a baseline don't count.
 
 ## IN PROGRESS
-- [~] T-001 Repo scaffold — code, `make lint` and `make test-api` green with `LOCAL=1`; SPA → Vite proxy → API health verified on the host (2026-10-05). Remaining: verify `make up` in Docker once WSL2 is enabled on the dev machine.
+- (none — next: T-002)
 
 ## TODO (prioritised, top = next)
 - [ ] T-002 ORM models + initial Alembic migration for users, posts, likes, comments — acceptance: `make migrate` on an empty DB creates all tables, constraints and indexes in architecture.md; `alembic downgrade base` succeeds — refs: Data model
@@ -149,6 +149,7 @@ Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Number
 - (v2 note) Open questions in product.md — open questions in product.md (self-likes, comment moderation, deployment, deadline) do not block; assumptions are recorded.
 
 ## DONE (recent)
+- [x] T-001 Repo scaffold: backend health endpoint, Vite SPA + proxy, docker-compose (db, api, web), Makefile, lint configs — `make up` all healthy; health via :8000 and via :5173 proxy → `{"status":"ok"}`; `make lint` exit 0; `make test-api` 1 passed — 2026-10-05
 - [x] T-000e v5 doc package: engineering.md, MVC/repository architecture, REST v2 rules BR-84–BR-94, integration rules BR-95–BR-110, tasks T-081–T-101 — 2026-09-28
 - [x] T-000d v4 doc package: v3 docs aligned (T-040 drafted) + RBAC/DevOps FRs, architecture, BR-59–BR-83, tasks T-061–T-080 — 2026-09-28
 - [x] T-000c v3 tasks + business rules BR-29–BR-58 (other docs pending T-040) — 2026-09-28
