@@ -23,6 +23,7 @@ Day plan: D1 T-021–T-024 · D2 T-025–T-027 · D3 T-028–T-031 · D4 T-032�
 Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Numbers without a baseline don't count.
 
 ## IN PROGRESS
+- [~] T-014 Like button (optimistic toggle + rollback, aria-pressed; anonymous → "Log in to like"; own post → count only) and comments (list oldest first with pagination, form with 2,000-char counter, "Log in to comment", inline-confirm delete when can_delete) — implemented 2026-10-06, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-013 Editor (/write, /edit/:slug: title + Markdown Write/Preview tabs, Save draft/Publish, Save changes/Unpublish, 422 errors under fields) + My posts (status badge, Edit, Publish/Unpublish, inline-confirm Delete, pagination); RequireAuth guard; Edit only rendered for is_owner — implemented 2026-10-06, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-012 Feed (/) and post detail (/p/:slug) with numbered pagination in the URL, skeleton/error/empty states, safe Markdown (raw HTML rendered as text via remarkHtmlAsText, javascript: URLs stripped), article typography; draft → Not found for non-owners — implemented 2026-10-06, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-011 Login ## IN PROGRESS Register pages: validate on blur + submit, server 409/422 errors under fields, generic 401 message, return to the page the user came from, logout from avatar menu — implemented 2026-10-06, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
@@ -36,7 +37,6 @@ Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Number
 - [~] T-003 Test harness: Postgres test DB (auto-created, schema via Alembic), per-test SAVEPOINT rollback, factories, `auth_client(user)`, `count_queries` fixture; core/security.py (argon2id, JWT) — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 
 ## TODO (prioritised, top = next)
-- [ ] T-014 Like button (optimistic) + comments list/form/delete — acceptance: anonymous sees "Log in to like/comment"; own post shows count but no like button; delete visible only per BR-07 — refs: FR-10–FR-13
 - [ ] T-015 Loading, empty and error states on every data view; Author page if time — acceptance: each view checked with API stopped (error), empty DB (empty), throttled network (loading) — refs: design.md, FR-14
 - [ ] T-016 Frontend tests: Vitest for api client + like toggle; one Playwright smoke (register → write → publish → second user likes + comments) — acceptance: `make test-web` passes
 - [ ] T-017 README: what it is, screenshot, prerequisites, 3-command quickstart, demo logins, commands table, project structure, link to docs — acceptance: followed verbatim on a fresh clone by someone else (or a fresh folder)

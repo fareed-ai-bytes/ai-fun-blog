@@ -5,6 +5,9 @@ import { buttonClass } from '../components/Button';
 import { Markdown } from '../components/Markdown';
 import { StatusBadge } from '../components/StatusBadge';
 import { ErrorState, PostSkeleton } from '../components/states';
+import { useMe } from '../features/auth/useMe';
+import { Comments } from '../features/comments/Comments';
+import { LikeButton } from '../features/likes/LikeButton';
 import { usePost } from '../features/posts/queries';
 import { formatDate, pluralise } from '../lib/format';
 import { NotFoundPage } from './NotFoundPage';
@@ -12,6 +15,7 @@ import { NotFoundPage } from './NotFoundPage';
 export function PostPage() {
   const { slug = '' } = useParams();
   const post = usePost(slug);
+  const { data: me } = useMe();
 
   if (post.isPending) return <PostSkeleton />;
   if (post.error instanceof ApiError && post.error.status === 404) return <NotFoundPage />;
@@ -47,9 +51,12 @@ export function PostPage() {
 
       <Markdown>{data.body_md}</Markdown>
 
-      <footer className="mt-10 border-t border-line pt-6 text-sm text-muted">
-        {pluralise(data.like_count, 'like')} · {pluralise(data.comment_count, 'comment')}
+      <footer className="mt-10 flex flex-wrap items-center gap-4 border-t border-line pt-6">
+        <LikeButton post={data} me={me} />
+        <span className="text-sm text-muted">{pluralise(data.comment_count, 'comment')}</span>
       </footer>
+
+      <Comments post={data} me={me} />
     </article>
   );
 }
