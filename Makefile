@@ -25,6 +25,9 @@ help: ## List every target with a description
 	@grep -hE '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: setup
+setup: up migrate seed ## First run: start the stack, migrate, seed demo data
+
 ##@ Stack
 .PHONY: up down logs logs-worker up-s3 up-prod up-obs
 up: ## Start db, api and web (dev, hot reload)
@@ -92,7 +95,7 @@ fmt: ## Format backend and frontend
 	$(API_RUN) ruff check --fix .
 	$(WEB_RUN) prettier --write .
 
-ci: lint test-api ## Run all CI checks locally
+ci: lint test-api test-web ## Run all CI checks locally
 
 ##@ Performance
 .PHONY: explain loadtest
