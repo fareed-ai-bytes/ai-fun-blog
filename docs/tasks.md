@@ -23,10 +23,9 @@ Day plan: D1 T-021–T-024 · D2 T-025–T-027 · D3 T-028–T-031 · D4 T-032�
 Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Numbers without a baseline don't count.
 
 ## IN PROGRESS
-- (none — next: T-003)
+- [~] T-003 Test harness: Postgres test DB (auto-created, schema via Alembic), per-test SAVEPOINT rollback, factories, `auth_client(user)`, `count_queries` fixture; core/security.py (argon2id, JWT) — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 
 ## TODO (prioritised, top = next)
-- [ ] T-003 Test harness: Postgres test DB, per-test rollback, factories, `auth_client(user)` helper — acceptance: one sample test passes via `make test-api`
 - [ ] T-004 Auth backend: register, login, logout, me; argon2; JWT cookie; `get_current_user` / `get_optional_user`; error envelope handler — acceptance: tests for every FR-01/FR-02 criterion + BR-11, BR-12 pass — refs: FR-01, FR-02
 - [ ] T-005 Post CRUD backend: create, patch, delete, `/me/posts`, slug generation, excerpt — acceptance: tests for FR-05, FR-06, FR-08, FR-09 + BR-02, BR-10, BR-14, BR-15 pass — refs: FR-05, FR-06, FR-08, FR-09
 - [ ] T-006 Publish/visibility + public reads: feed with like/comment counts in one query, get by slug, `?author=` filter — acceptance: tests for FR-03, FR-04, FR-07, FR-14 + BR-01, BR-08, BR-09, BR-13 pass; feed issues a constant number of queries regardless of page size — refs: FR-03, FR-04, FR-07, FR-14
