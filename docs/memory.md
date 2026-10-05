@@ -132,3 +132,5 @@
 - (v5) The v5 syllabus lists foundation topics (16) plus MVC/REST/integration topics (34). Many foundations are already true of the repo; the assessment value is making them visible (engineering.md) and enforced (tooling), not rebuilding them.
 - (v4) Weeks 3–4 add 8 + 20 syllabus topics. RBAC topics overlap week 3 by design — week 4 refactors role checks into permissions rather than rebuilding them.
 - (v2) Week-2 assessment is against a syllabus of 23 topics. Reviewers will look for each one; docs/TOPICS.md is the map that lets them find it in seconds.
+- (T-018) On Windows, `Path.write_text()` writes CRLF; generated docs pass `newline="\n"` so `make api-docs` produces the same bytes on every OS (`.gitattributes` also forces LF).
+- (T-019) CI runs on GitHub's Ubuntu runners with a Postgres service container; `TEST_DATABASE_URL` points at `localhost` there, `db` in compose. Branch protection for `main` must be switched on by the repo owner in GitHub settings.

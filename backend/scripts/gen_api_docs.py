@@ -229,7 +229,8 @@ def render(spec: dict[str, Any]) -> str:
 def main() -> None:
     source = Path(sys.argv[1] if len(sys.argv) > 1 else "../docs/openapi.json")
     target = Path(sys.argv[2] if len(sys.argv) > 2 else "../docs/api.md")
-    target.write_text(render(json.loads(source.read_text(encoding="utf-8"))), encoding="utf-8")
+    content = render(json.loads(source.read_text(encoding="utf-8")))
+    target.write_text(content, encoding="utf-8", newline="\n")
     print(f"Wrote {target}")  # noqa: T201 - CLI output
 
 

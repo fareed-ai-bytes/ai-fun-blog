@@ -28,7 +28,7 @@ def _ensure_database_exists(url: str) -> None:
             text("SELECT 1 FROM pg_database WHERE datname = :name"), {"name": target.database}
         )
         if not exists:
-            conn.execute(text(f'CREATE DATABASE "{target.database}"'))
+            conn.execute(text(f'CREATE DATABASE "{target.database}"'))  # noqa: S608 - test DB name from settings
     admin.dispose()
 
 

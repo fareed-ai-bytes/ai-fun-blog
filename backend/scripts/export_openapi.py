@@ -9,7 +9,8 @@ from app.main import app
 
 def main() -> None:
     target = Path(sys.argv[1] if len(sys.argv) > 1 else "../docs/openapi.json")
-    target.write_text(json.dumps(app.openapi(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    content = json.dumps(app.openapi(), indent=2, sort_keys=True) + "\n"
+    target.write_text(content, encoding="utf-8", newline="\n")
     print(f"Wrote {target}")  # noqa: T201 - CLI output
 
 
