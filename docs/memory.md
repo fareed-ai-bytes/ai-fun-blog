@@ -54,6 +54,9 @@
 | 2026-09-28 | v5: GitHub OAuth App, public repos only, minimal scope | Avoids the broad `repo` scope; reading public content needs no scope | GitHub App — better least privilege but more setup (installation tokens, JWT); consider if time allows |
 | 2026-09-28 | v5: Outbound webhook signing `t=…,v1=…` HMAC with timestamp | Replay protection, familiar pattern for integrators | Unsigned or body-only HMAC |
 | 2026-09-28 | v5: User integration credentials encrypted with AES-GCM + key ids | Rotation without downtime; DB dump alone leaks nothing usable | Plaintext or hashing (can't hash — we need the value) |
+| 2026-10-05 | Build the v5 module layout (`app/modules/<feature>/`) from T-001 instead of the v1 `app/services/` layout | Greenfield: building v1 folders only to move them in T-084 is pure churn. T-084 (restructure) becomes "done by design"; T-085/T-086 shrink to adding import-linter contracts | Follow v1 layout then restructure — doubles the work, no behaviour gain |
+| 2026-10-05 | Makefile runs tools in Docker by default; `LOCAL=1` runs them on the host via uv/npm | Lint/tests work before Docker is up and in CI without compose | Host-only or Docker-only targets |
+| 2026-10-05 | Node 22 LTS for the frontend (host and `node:22-alpine` image) | Vite 8 / create-vite need Node ^20.19 or ≥ 22.12 | Pin an old Vite for Node 20.11 |
 | 2026-09-28 | v4: "CD" = GHCR release + scripted deploy to prod-like compose | No hosting target in scope; still demonstrates promote-by-tag, migrate, health-gated rollback | Real cloud deploy — out of scope (open question in product.md) |
 
 ## Gotchas & non-obvious behaviour
@@ -104,6 +107,11 @@
 - (anticipated, v5) Idempotency keys need a lock while the first request is in flight, otherwise two concurrent retries both execute.
 - (anticipated, v5) Moving files between modules breaks Alembic's model imports and pytest fixtures' import paths — update `alembic/env.py` model imports in the same commit.
 - (anticipated, v5) Weak ETags (`W/`) are not valid for `If-Match` comparisons — v2 uses strong ETags.
+
+- (T-001) FastAPI's TestClient emits `StarletteDeprecationWarning: Using httpx … install httpx2`. Harmless for now; switching needs dependency approval (httpx2 is not pre-approved).
+- (T-001) Windows: `uv python install 3.12` prints "Missing expected target directory for Python minor version link" — the interpreter is installed and usable; only the version-link shortcut failed.
+- (T-001) The Vite proxy target comes from `API_PROXY_TARGET` (compose sets `http://api:8000`); without it Vite proxies to `localhost:8000` for host-only runs.
+- (T-001) Docker bind mounts hide image-installed deps — compose uses anonymous volumes for `/app/.venv` and `/app/node_modules`, and the backend venv lives at `/opt/venv`.
 
 ## Things that were tried and failed
 - (none yet)

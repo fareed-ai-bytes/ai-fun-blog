@@ -23,10 +23,9 @@ Day plan: D1 T-021–T-024 · D2 T-025–T-027 · D3 T-028–T-031 · D4 T-032�
 Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Numbers without a baseline don't count.
 
 ## IN PROGRESS
-- (none — start T-001)
+- [~] T-001 Repo scaffold — code, `make lint` and `make test-api` green with `LOCAL=1`; SPA → Vite proxy → API health verified on the host (2026-10-05). Remaining: verify `make up` in Docker once WSL2 is enabled on the dev machine.
 
 ## TODO (prioritised, top = next)
-- [ ] T-001 Repo scaffold: `backend/`, `frontend/`, `docker-compose.yml` (db, api, web), Makefile with all targets named in CLAUDE.md, `.env.example`, ruff + ESLint/Prettier configs, `GET /api/v1/health`, Vite proxy — acceptance: `make up` then `curl localhost:8000/api/v1/health` → `{"status":"ok"}`; `localhost:5173` renders a placeholder that fetched `/api/v1/health` through the proxy; `make lint` passes
 - [ ] T-002 ORM models + initial Alembic migration for users, posts, likes, comments — acceptance: `make migrate` on an empty DB creates all tables, constraints and indexes in architecture.md; `alembic downgrade base` succeeds — refs: Data model
 - [ ] T-003 Test harness: Postgres test DB, per-test rollback, factories, `auth_client(user)` helper — acceptance: one sample test passes via `make test-api`
 - [ ] T-004 Auth backend: register, login, logout, me; argon2; JWT cookie; `get_current_user` / `get_optional_user`; error envelope handler — acceptance: tests for every FR-01/FR-02 criterion + BR-11, BR-12 pass — refs: FR-01, FR-02
