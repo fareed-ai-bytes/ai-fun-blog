@@ -23,6 +23,7 @@ Day plan: D1 T-021–T-024 · D2 T-025–T-027 · D3 T-028–T-031 · D4 T-032�
 Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Numbers without a baseline don't count.
 
 ## IN PROGRESS
+- [~] T-016 Frontend tests: Vitest (jsdom) for src/api/client.ts and the optimistic LikeButton (incl. rollback); Playwright smoke e2e/smoke.spec.ts (register → write → publish → second user likes + comments); `make test-web`, `make test-e2e` — implemented 2026-10-06, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-015 Loading (skeletons), empty (message + action) and error (message + Retry) states on feed, post, comments, my posts, editor and author views; author page /u/:username (FR-14); placeholder page removed. Manual check with API stopped / empty DB / throttled network still to do — implemented 2026-10-06, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-014 Like button (optimistic toggle + rollback, aria-pressed; anonymous → "Log in to like"; own post → count only) and comments (list oldest first with pagination, form with 2,000-char counter, "Log in to comment", inline-confirm delete when can_delete) — implemented 2026-10-06, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-013 Editor (/write, /edit/:slug: title + Markdown Write/Preview tabs, Save draft/Publish, Save changes/Unpublish, 422 errors under fields) + My posts (status badge, Edit, Publish/Unpublish, inline-confirm Delete, pagination); RequireAuth guard; Edit only rendered for is_owner — implemented 2026-10-06, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
@@ -38,7 +39,6 @@ Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Number
 - [~] T-003 Test harness: Postgres test DB (auto-created, schema via Alembic), per-test SAVEPOINT rollback, factories, `auth_client(user)`, `count_queries` fixture; core/security.py (argon2id, JWT) — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 
 ## TODO (prioritised, top = next)
-- [ ] T-016 Frontend tests: Vitest for api client + like toggle; one Playwright smoke (register → write → publish → second user likes + comments) — acceptance: `make test-web` passes
 - [ ] T-017 README: what it is, screenshot, prerequisites, 3-command quickstart, demo logins, commands table, project structure, link to docs — acceptance: followed verbatim on a fresh clone by someone else (or a fresh folder)
 - [ ] T-018 Deliverable docs: `docs/api.md` generated from exported `openapi.json` + auth/error notes; `docs/usage.md` (reader, author, commenter walkthroughs); architecture diagram checked against real code — acceptance: every endpoint in code appears in api.md and vice versa
 - [ ] T-019 Clean-clone verification + GitHub Actions workflow running lint + backend tests — acceptance: `git clone` into a new folder → quickstart works; CI green on main

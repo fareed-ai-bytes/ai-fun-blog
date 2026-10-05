@@ -63,12 +63,15 @@ seed-perf: ## Seed 100k-post performance dataset (slow)
 	$(call todo,T-022)
 
 ##@ Quality
-.PHONY: test-api test-web lint lint-api lint-web lint-arch fmt ci
+.PHONY: test-api test-web test-e2e lint lint-api lint-web lint-arch fmt ci
 test-api: ## Run backend tests (against the blog_test database)
 	$(API_DB_RUN) pytest
 
-test-web: ## Run frontend tests
-	$(call todo,T-016)
+test-web: ## Run frontend unit tests (Vitest)
+	$(WEB_RUN) vitest run
+
+test-e2e: ## Playwright smoke test against the running stack (host; needs `make up`)
+	cd frontend && npx playwright install chromium && npx playwright test
 
 lint: lint-api lint-web ## Lint backend and frontend
 
