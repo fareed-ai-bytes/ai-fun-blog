@@ -8,9 +8,11 @@ COMPOSE := docker compose
 
 ifeq ($(LOCAL),1)
 API_RUN := cd backend && uv run
+API_DB_RUN := $(API_RUN)
 WEB_RUN := cd frontend && npx
 else
 API_RUN := $(COMPOSE) run --rm --no-deps api
+API_DB_RUN := $(COMPOSE) run --rm api
 WEB_RUN := $(COMPOSE) run --rm --no-deps web npx
 endif
 
@@ -49,10 +51,10 @@ up-obs: ## Observability: Prometheus, Grafana, GlitchTip
 ##@ Database
 .PHONY: migrate migration seed seed-perf
 migrate: ## Apply Alembic migrations
-	$(call todo,T-002)
+	$(API_DB_RUN) alembic upgrade head
 
 migration: ## Create a migration: make migration m="message"
-	$(call todo,T-002)
+	$(API_DB_RUN) alembic revision --autogenerate -m "$(m)"
 
 seed: ## Seed demo data (idempotent)
 	$(call todo,T-009)
@@ -62,8 +64,8 @@ seed-perf: ## Seed 100k-post performance dataset (slow)
 
 ##@ Quality
 .PHONY: test-api test-web lint lint-api lint-web lint-arch fmt ci
-test-api: ## Run backend tests
-	$(API_RUN) pytest
+test-api: ## Run backend tests (against the blog_test database)
+	$(API_DB_RUN) pytest
 
 test-web: ## Run frontend tests
 	$(call todo,T-016)

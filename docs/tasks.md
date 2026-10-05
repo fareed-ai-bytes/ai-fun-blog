@@ -23,10 +23,9 @@ Day plan: D1 T-021–T-024 · D2 T-025–T-027 · D3 T-028–T-031 · D4 T-032�
 Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Numbers without a baseline don't count.
 
 ## IN PROGRESS
-- (none — next: T-002)
+- (none — next: T-003)
 
 ## TODO (prioritised, top = next)
-- [ ] T-002 ORM models + initial Alembic migration for users, posts, likes, comments — acceptance: `make migrate` on an empty DB creates all tables, constraints and indexes in architecture.md; `alembic downgrade base` succeeds — refs: Data model
 - [ ] T-003 Test harness: Postgres test DB, per-test rollback, factories, `auth_client(user)` helper — acceptance: one sample test passes via `make test-api`
 - [ ] T-004 Auth backend: register, login, logout, me; argon2; JWT cookie; `get_current_user` / `get_optional_user`; error envelope handler — acceptance: tests for every FR-01/FR-02 criterion + BR-11, BR-12 pass — refs: FR-01, FR-02
 - [ ] T-005 Post CRUD backend: create, patch, delete, `/me/posts`, slug generation, excerpt — acceptance: tests for FR-05, FR-06, FR-08, FR-09 + BR-02, BR-10, BR-14, BR-15 pass — refs: FR-05, FR-06, FR-08, FR-09
@@ -149,6 +148,7 @@ Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Number
 - (v2 note) Open questions in product.md — open questions in product.md (self-likes, comment moderation, deployment, deadline) do not block; assumptions are recorded.
 
 ## DONE (recent)
+- [x] T-002 ORM models + migration 0001 (users, posts, likes, comments; CHECKs, enum, DESC indexes, cascades) — `make migrate` on empty DB creates all; `alembic downgrade base` → upgrade round-trip OK; `alembic check` no drift; lint 0, test-api 1 passed — 2026-10-05
 - [x] T-001 Repo scaffold: backend health endpoint, Vite SPA + proxy, docker-compose (db, api, web), Makefile, lint configs — `make up` all healthy; health via :8000 and via :5173 proxy → `{"status":"ok"}`; `make lint` exit 0; `make test-api` 1 passed — 2026-10-05
 - [x] T-000e v5 doc package: engineering.md, MVC/repository architecture, REST v2 rules BR-84–BR-94, integration rules BR-95–BR-110, tasks T-081–T-101 — 2026-09-28
 - [x] T-000d v4 doc package: v3 docs aligned (T-040 drafted) + RBAC/DevOps FRs, architecture, BR-59–BR-83, tasks T-061–T-080 — 2026-09-28
