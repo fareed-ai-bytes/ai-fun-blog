@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1 import api_router
 from app.core.config import get_settings
+from app.core.errors import register_error_handlers
 
 
 def create_app() -> FastAPI:
@@ -20,6 +21,7 @@ def create_app() -> FastAPI:
         allow_headers=["Content-Type", "X-Request-ID"],
         max_age=600,
     )
+    register_error_handlers(app)
     app.include_router(api_router)
     return app
 
