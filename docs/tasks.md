@@ -23,6 +23,7 @@ Day plan: D1 T-021–T-024 · D2 T-025–T-027 · D3 T-028–T-031 · D4 T-032�
 Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Numbers without a baseline don't count.
 
 ## IN PROGRESS
+- [~] T-011 Login ## IN PROGRESS Register pages: validate on blur + submit, server 409/422 errors under fields, generic 401 message, return to the page the user came from, logout from avatar menu — implemented 2026-10-06, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-010 Frontend shell: React Router with every v1 route (placeholders until T-011–T-015), layout + header (username/avatar menu vs Log in/Sign up), typed src/api/* for every v1 endpoint, TanStack Query client, useMe(), Not found page — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-009 Seed: `make seed` → scripts/seed.py (3 users, 10 posts incl. 1 draft each, likes, comments; idempotent by email/slug/key); README demo logins; tests for FR-15 — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-008 Comments: GET/POST /posts/{id}/comments (oldest first, 20/page, can_delete), DELETE /comments/{id} (comment or post author); tests for FR-11, FR-12, FR-13, BR-05, BR-06, BR-07, BR-09 incl. constant query count — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
@@ -33,7 +34,6 @@ Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Number
 - [~] T-003 Test harness: Postgres test DB (auto-created, schema via Alembic), per-test SAVEPOINT rollback, factories, `auth_client(user)`, `count_queries` fixture; core/security.py (argon2id, JWT) — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 
 ## TODO (prioritised, top = next)
-- [ ] T-011 Login & Register pages — acceptance: register → logged in and redirected back; 409/422 errors shown under fields; logout returns to anonymous header — refs: FR-01, FR-02
 - [ ] T-012 Feed & post detail pages with safe Markdown rendering and pagination — acceptance: anonymous user reads seeded posts; a `<script>` in a post body renders as text — refs: FR-03, FR-04
 - [ ] T-013 Editor (Write/Preview tabs, Save draft, Publish) + My posts dashboard (status badge, edit, publish/unpublish, delete with confirm) — acceptance: full author loop works in the browser; Edit/Delete never visible on others' posts — refs: FR-05–FR-09
 - [ ] T-014 Like button (optimistic) + comments list/form/delete — acceptance: anonymous sees "Log in to like/comment"; own post shows count but no like button; delete visible only per BR-07 — refs: FR-10–FR-13
