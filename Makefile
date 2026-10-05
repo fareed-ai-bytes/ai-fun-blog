@@ -120,7 +120,11 @@ deploy: ## Deploy a release: make deploy VERSION=vX.Y.Z
 	$(call todo,T-078)
 
 ##@ Codegen & tooling
-.PHONY: permissions-doc gen-client smee
+.PHONY: permissions-doc gen-client smee api-docs
+api-docs: ## Export docs/openapi.json and regenerate docs/api.md (host; needs uv)
+	cd backend && uv run python -m scripts.export_openapi ../docs/openapi.json
+	cd backend && uv run python -m scripts.gen_api_docs ../docs/openapi.json ../docs/api.md
+
 permissions-doc: ## Regenerate docs/permissions.md from app/authz
 	$(call todo,T-061)
 
