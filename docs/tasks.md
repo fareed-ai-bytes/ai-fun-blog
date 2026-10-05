@@ -23,11 +23,11 @@ Day plan: D1 T-021–T-024 · D2 T-025–T-027 · D3 T-028–T-031 · D4 T-032�
 Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Numbers without a baseline don't count.
 
 ## IN PROGRESS
+- [~] T-005 Post CRUD: POST /posts, PATCH/DELETE /posts/{id}, GET /me/posts, slugs (BR-10), excerpts (BR-14), cascade delete (BR-15); posts repository with one-query counts; tests for FR-05, FR-06, FR-08, FR-09, BR-02, BR-10, BR-14, BR-15 — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-004 Auth backend: register/login/logout/me, argon2id, JWT HttpOnly cookie, get_current_user/get_optional_user, error envelope handlers; tests for FR-01, FR-02, BR-11, BR-12 — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-003 Test harness: Postgres test DB (auto-created, schema via Alembic), per-test SAVEPOINT rollback, factories, `auth_client(user)`, `count_queries` fixture; core/security.py (argon2id, JWT) — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 
 ## TODO (prioritised, top = next)
-- [ ] T-005 Post CRUD backend: create, patch, delete, `/me/posts`, slug generation, excerpt — acceptance: tests for FR-05, FR-06, FR-08, FR-09 + BR-02, BR-10, BR-14, BR-15 pass — refs: FR-05, FR-06, FR-08, FR-09
 - [ ] T-006 Publish/visibility + public reads: feed with like/comment counts in one query, get by slug, `?author=` filter — acceptance: tests for FR-03, FR-04, FR-07, FR-14 + BR-01, BR-08, BR-09, BR-13 pass; feed issues a constant number of queries regardless of page size — refs: FR-03, FR-04, FR-07, FR-14
 - [ ] T-007 Likes backend — acceptance: tests for FR-10 + BR-03, BR-04, BR-05 pass — refs: FR-10
 - [ ] T-008 Comments backend — acceptance: tests for FR-11, FR-12, FR-13 + BR-06, BR-07 pass — refs: FR-11–FR-13

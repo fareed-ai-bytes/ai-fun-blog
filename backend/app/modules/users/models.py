@@ -5,6 +5,7 @@ from sqlalchemy import CheckConstraint, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
+from app.db.timestamps import utcnow
 
 
 class User(Base):
@@ -20,4 +21,4 @@ class User(Base):
     username: Mapped[str] = mapped_column(String(30), unique=True)
     display_name: Mapped[str] = mapped_column(String(60))
     password_hash: Mapped[str] = mapped_column(String(255))
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(default=utcnow, server_default=func.now())

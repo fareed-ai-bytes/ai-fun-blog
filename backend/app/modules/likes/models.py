@@ -5,6 +5,7 @@ from sqlalchemy import ForeignKey, Index, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
+from app.db.timestamps import utcnow
 
 
 class Like(Base):
@@ -17,4 +18,4 @@ class Like(Base):
     post_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True
     )
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(default=utcnow, server_default=func.now())

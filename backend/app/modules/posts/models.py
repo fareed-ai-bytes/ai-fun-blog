@@ -6,6 +6,7 @@ from sqlalchemy import CheckConstraint, Enum, ForeignKey, Index, String, Text, f
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
+from app.db.timestamps import utcnow
 from app.modules.users.models import User
 
 
@@ -36,8 +37,10 @@ class Post(Base):
         default=PostStatus.DRAFT,
     )
     published_at: Mapped[datetime | None]
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
+    created_at: Mapped[datetime] = mapped_column(default=utcnow, server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(
+        default=utcnow, server_default=func.now(), onupdate=utcnow
+    )
 
     # lazy="raise": every load must be explicit (rules.md, Performance).
     author: Mapped[User] = relationship(lazy="raise")
