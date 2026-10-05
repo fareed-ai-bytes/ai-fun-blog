@@ -23,6 +23,7 @@ Day plan: D1 T-021–T-024 · D2 T-025–T-027 · D3 T-028–T-031 · D4 T-032�
 Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Numbers without a baseline don't count.
 
 ## IN PROGRESS
+- [~] T-009 Seed: `make seed` → scripts/seed.py (3 users, 10 posts incl. 1 draft each, likes, comments; idempotent by email/slug/key); README demo logins; tests for FR-15 — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-008 Comments: GET/POST /posts/{id}/comments (oldest first, 20/page, can_delete), DELETE /comments/{id} (comment or post author); tests for FR-11, FR-12, FR-13, BR-05, BR-06, BR-07, BR-09 incl. constant query count — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-007 Likes: PUT/DELETE /posts/{id}/like (idempotent via ON CONFLICT DO NOTHING), self-like 403, drafts 404; tests for FR-10, BR-03, BR-04, BR-05 — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 - [~] T-006 Public reads: GET /posts feed (published only, published_at DESC + id, 10/page, counts in one query, ?author=), GET /posts/{slug} with draft→404 and liked_by_me/is_owner; publish/unpublish rules; tests for FR-03, FR-04, FR-07, FR-14, BR-01, BR-08, BR-09, BR-13 incl. constant query count — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
@@ -31,7 +32,6 @@ Rule: T-022 (baseline measurements) happens BEFORE any optimisation task. Number
 - [~] T-003 Test harness: Postgres test DB (auto-created, schema via Alembic), per-test SAVEPOINT rollback, factories, `auth_client(user)`, `count_queries` fixture; core/security.py (argon2id, JWT) — implemented 2026-10-05, awaiting verification (`make test-api`, `make lint` not run per Fareed's request)
 
 ## TODO (prioritised, top = next)
-- [ ] T-009 Seed script — acceptance: `make seed` twice gives same row counts; README-documented logins work — refs: FR-15
 - [ ] T-010 Frontend shell: router with all routes in design.md, layout/header, `src/api/client.ts`, TanStack Query, `useMe()` — acceptance: header shows username after login cookie exists and Log in/Sign up otherwise; unknown route shows Not found
 - [ ] T-011 Login & Register pages — acceptance: register → logged in and redirected back; 409/422 errors shown under fields; logout returns to anonymous header — refs: FR-01, FR-02
 - [ ] T-012 Feed & post detail pages with safe Markdown rendering and pagination — acceptance: anonymous user reads seeded posts; a `<script>` in a post body renders as text — refs: FR-03, FR-04

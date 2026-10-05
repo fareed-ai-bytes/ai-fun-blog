@@ -57,7 +57,7 @@ migration: ## Create a migration: make migration m="message"
 	$(API_DB_RUN) alembic revision --autogenerate -m "$(m)"
 
 seed: ## Seed demo data (idempotent)
-	$(call todo,T-009)
+	$(API_DB_RUN) python -m scripts.seed
 
 seed-perf: ## Seed 100k-post performance dataset (slow)
 	$(call todo,T-022)
