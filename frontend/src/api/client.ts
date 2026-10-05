@@ -12,6 +12,7 @@ export class ApiError extends Error {
 
   constructor(status: number, code: string, message: string, details: unknown = null) {
     super(message);
+    this.name = 'ApiError';
     this.status = status;
     this.code = code;
     this.details = details;
@@ -24,12 +25,29 @@ function isErrorEnvelope(value: unknown): value is ErrorEnvelope {
   return typeof inner === 'object' && inner !== null && 'code' in inner && 'message' in inner;
 }
 
+export type QueryParams = Record<string, string | number | undefined | null>;
+
+export function withQuery(path: string, params: QueryParams): string {
+  const search = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null && value !== '') search.set(key, String(value));
+  }
+  const query = search.toString();
+  return query ? `${path}?${query}` : path;
+}
+
 export async function apiRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers);
   if (init.body !== undefined && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
   }
-  const response = await fetch(path, { ...init, headers, credentials: 'include' });
+
+  let response: Response;
+  try {
+    response = await fetch(path, { ...init, headers, credentials: 'include' });
+  } catch {
+    throw new ApiError(0, 'NETWORK_ERROR', 'Could not reach the server. Check your connection.');
+  }
 
   if (response.status === 204) return undefined as T;
   const body: unknown = await response.json().catch(() => null);
@@ -42,4 +60,31 @@ export async function apiRequest<T>(path: string, init: RequestInit = {}): Promi
     throw new ApiError(response.status, 'HTTP_ERROR', `Request failed (${response.status})`);
   }
   return body as T;
+}
+
+export function jsonBody(value: unknown): RequestInit {
+  return { body: JSON.stringify(value) };
+}
+
+/** Field → message map from a 422 (`details: [{field, message}]`) or 409 (`details: {field}`). */
+export function fieldErrors(error: unknown): Record<string, string> {
+  if (!(error instanceof ApiError)) return {};
+  const { details } = error;
+  const result: Record<string, string> = {};
+  if (Array.isArray(details)) {
+    for (const item of details as unknown[]) {
+      if (typeof item === 'object' && item !== null && 'field' in item && 'message' in item) {
+        const field = String(item.field);
+        if (field && !(field in result)) result[field] = String(item.message);
+      }
+    }
+  } else if (typeof details === 'object' && details !== null && 'field' in details) {
+    result[String(details.field)] = error.message;
+  }
+  return result;
+}
+
+export function errorMessage(error: unknown): string {
+  if (error instanceof ApiError) return error.message;
+  return 'Something went wrong. Please try again.';
 }

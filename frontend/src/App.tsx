@@ -1,29 +1,24 @@
-import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router';
 
-import { getHealth } from './api/health';
+import { Layout } from './components/Layout';
+import { ComingSoonPage } from './pages/ComingSoonPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
-type ApiState = { kind: 'loading' } | { kind: 'ok'; status: string } | { kind: 'error' };
-
-// Placeholder screen for T-001: proves the SPA reaches the API through the Vite proxy.
-// Replaced by the router + app shell in T-010 (which also brings TanStack Query).
+// Every route from docs/design.md (v1 screens).
 export default function App() {
-  const [state, setState] = useState<ApiState>({ kind: 'loading' });
-
-  useEffect(() => {
-    getHealth()
-      .then((health) => setState({ kind: 'ok', status: health.status }))
-      .catch(() => setState({ kind: 'error' }));
-  }, []);
-
   return (
-    <main className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="text-3xl font-semibold text-ink">Blog Platform</h1>
-      <p className="mt-2 text-muted">Scaffold is running. The feed arrives in a later task.</p>
-      <p className="mt-8 rounded-md border border-line p-4" data-testid="api-health">
-        API health: {state.kind === 'loading' && <span className="text-muted">checking…</span>}
-        {state.kind === 'ok' && <span className="font-medium text-success">{state.status}</span>}
-        {state.kind === 'error' && <span className="font-medium text-danger">unreachable</span>}
-      </p>
-    </main>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<ComingSoonPage title="Feed" />} />
+        <Route path="p/:slug" element={<ComingSoonPage title="Post" />} />
+        <Route path="login" element={<ComingSoonPage title="Log in" />} />
+        <Route path="register" element={<ComingSoonPage title="Sign up" />} />
+        <Route path="me/posts" element={<ComingSoonPage title="My posts" />} />
+        <Route path="write" element={<ComingSoonPage title="Write" />} />
+        <Route path="edit/:slug" element={<ComingSoonPage title="Edit" />} />
+        <Route path="u/:username" element={<ComingSoonPage title="Author" />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }
