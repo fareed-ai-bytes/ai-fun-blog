@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router';
 
 import { Layout } from './components/Layout';
 import { RequireAuth } from './features/auth/RequireAuth';
-import { ComingSoonPage } from './pages/ComingSoonPage';
+import { AuthorPage } from './pages/AuthorPage';
 import { EditPage, WritePage } from './pages/EditorPage';
 import { FeedPage } from './pages/FeedPage';
 import { LoginPage } from './pages/LoginPage';
@@ -44,7 +44,7 @@ export default function App() {
             </RequireAuth>
           }
         />
-        <Route path="u/:username" element={<ComingSoonPage title="Author" />} />
+        <Route path="u/:username" element={<AuthorPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
