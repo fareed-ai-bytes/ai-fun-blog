@@ -1,10 +1,11 @@
 import uuid
+from typing import Annotated
 
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Query, Response
 
 from app.core.pagination import Page
 from app.core.params import PageNumber
-from app.modules.auth.dependencies import CurrentUser, DbSession
+from app.modules.auth.dependencies import CurrentUser, DbSession, OptionalUser
 from app.modules.posts import service
 from app.modules.posts.models import PostStatus
 from app.modules.posts.schemas import PostCreate, PostDetail, PostSummary, PostUpdate
@@ -78,3 +79,30 @@ def delete_post(post_id: uuid.UUID, user: CurrentUser, db: DbSession) -> Respons
 )
 def list_my_posts(user: CurrentUser, db: DbSession, page: PageNumber = 1) -> Page[PostSummary]:
     return _page(service.list_my_posts(db, user, page))
+
+
+@router.get(
+    "/posts",
+    response_model=Page[PostSummary],
+    status_code=200,
+    operation_id="posts_list",
+    summary="Public feed of published posts, newest first",
+)
+def list_feed(
+    db: DbSession,
+    page: PageNumber = 1,
+    author: Annotated[str | None, Query(max_length=30, description="Author username")] = None,
+) -> Page[PostSummary]:
+    return _page(service.list_feed(db, page, author.lower() if author else None))
+
+
+@router.get(
+    "/posts/{slug}",
+    response_model=PostDetail,
+    status_code=200,
+    operation_id="posts_get",
+    summary="Read a post (drafts only by their author)",
+    responses=_NOT_FOUND,
+)
+def get_post(slug: str, viewer: OptionalUser, db: DbSession) -> PostDetail:
+    return PostDetail.from_view(service.get_post_by_slug(db, slug, viewer))
