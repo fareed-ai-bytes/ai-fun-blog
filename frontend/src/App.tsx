@@ -2,8 +2,10 @@ import { Route, Routes } from 'react-router';
 
 import { Layout } from './components/Layout';
 import { ComingSoonPage } from './pages/ComingSoonPage';
+import { FeedPage } from './pages/FeedPage';
 import { LoginPage } from './pages/LoginPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { PostPage } from './pages/PostPage';
 import { RegisterPage } from './pages/RegisterPage';
 
 // Every route from docs/design.md (v1 screens).
@@ -11,8 +13,8 @@ export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<ComingSoonPage title="Feed" />} />
-        <Route path="p/:slug" element={<ComingSoonPage title="Post" />} />
+        <Route index element={<FeedPage />} />
+        <Route path="p/:slug" element={<PostPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="me/posts" element={<ComingSoonPage title="My posts" />} />
